@@ -1,0 +1,37 @@
+{
+  "eval_cases": [
+    {
+      "eval_case_id": "silver_anniversary_beach_query",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "What is a recommended 5-day 25th Silver Anniversary trip itinerary under $6,000 for a couple seeking a romantic beach resort with fine dining options?"
+          }
+        ]
+      }
+    },
+    {
+      "eval_case_id": "itemized_budget_calculation",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "Can you calculate the itemized total budget for 4 nights at a $600/night resort, $1,400 roundtrip flights for two, $150/day dining for 5 days, and $300 in milestone activities for a $5,500 target budget?"
+          }
+        ]
+      }
+    },
+    {
+      "eval_case_id": "silver_anniversary_traditions",
+      "prompt": {
+        "role": "user",
+        "parts": [
+          {
+            "text": "What are traditional celebration ideas and special experiences for a 25th Silver Anniversary?"
+          }
+        ]
+      }
+    }
+  ]
+}

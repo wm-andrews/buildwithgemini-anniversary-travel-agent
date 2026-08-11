@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anniversary Travel Concierge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined">
+<style>
+  :root {
+    --bg-dark: #0a0d14;
+    --panel-bg: rgba(18, 24, 38, 0.75);
+    --card-bg: #111827;
+    --border: rgba(255, 255, 255, 0.12);
+    --border-glow: rgba(226, 232, 240, 0.25);
+    --silver-primary: #e2e8f0;
+    --silver-bright: #ffffff;
+    --silver-muted: #94a3b8;
+    --accent-silver: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 50%, #94a3b8 100%);
+    --accent-blue: #38bdf8;
+    --user-bubble: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    --radius-lg: 18px;
+    --radius-md: 12px;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: var(--bg-dark);
+    background-image: 
+      radial-gradient(at 0% 0%, rgba(56, 189, 248, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(148, 163, 184, 0.08) 0px, transparent 50%);
+    color: var(--silver-primary);
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  header {
+    background: var(--panel-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    z-index: 10;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--accent-silver);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f172a;
+    box-shadow: 0 0 15px rgba(226, 232, 240, 0.3);
+  }
+
+  .brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--silver-bright);
+    letter-spacing: -0.02em;
+    margin: 0;
+  }
+
+  .brand-sub {
+    font-size: 0.78rem;
+    color: var(--silver-muted);
+    margin-top: 2px;
+  }
+
+  .status-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: 20px;
+    background: rgba(34, 197, 94, 0.1);
+    border: 1px solid rgba(34, 197, 94, 0.3);
+    color: #4ade80;
+    font-weight: 500;
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    box-shadow: 0 0 8px #4ade80;
+  }
+
+  #main-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 920px;
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 0 1rem;
+  }
+
+  #log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    scroll-behavior: smooth;
+  }
+
+  .msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 88%;
+    animation: fadeIn 0.25s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .msg.user {
+    align-self: flex-end;
+    align-items: flex-end;
+  }
+
+  .msg.agent {
+    align-self: flex-start;
+    align-items: flex-start;
+  }
+
+  .sender-label {
+    font-size: 0.75rem;
+    color: var(--silver-muted);
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+  }
+
+  .bubble {
+    padding: 1rem 1.3rem;
+    border-radius: var(--radius-lg);
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    color: #f1f5f9;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+
+  .msg.user .bubble {
+    background: var(--user-bubble);
+    color: #ffffff;
+    border: none;
+    border-bottom-right-radius: 4px;
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
+  }
+
+  .msg.agent .bubble {
+    border-bottom-left-radius: 4px;
+  }
+
+  .bubble.rich {
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
+    width: 100%;
+  }
+
+  /* Formatted Text Inside Bubbles */
+  .bubble h1, .bubble h2, .bubble h3, .bubble h4 {
+    font-family: 'Outfit', sans-serif;
+    color: var(--silver-bright);
+    margin: 0.8rem 0 0.4rem 0;
+  }
+  .bubble h1 { font-size: 1.3rem; }
+  .bubble h2 { font-size: 1.15rem; }
+  .bubble h3 { font-size: 1.05rem; }
+
+  .bubble p { margin: 0.5rem 0; }
+  .bubble ul, .bubble ol { margin: 0.4rem 0; padding-left: 1.2rem; }
+  .bubble li { margin-bottom: 0.3rem; }
+  .bubble strong { color: #ffffff; font-weight: 600; }
+
+  /* Table Styling */
+  .bubble table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0.8rem 0;
+    font-size: 0.88rem;
+    background: rgba(15, 23, 42, 0.6);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .bubble th, .bubble td {
+    padding: 0.65rem 0.9rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .bubble th {
+    background: rgba(30, 41, 59, 0.8);
+    color: var(--silver-bright);
+    font-weight: 600;
+  }
+
+  /* Suggestions Bar */
+  #suggestions {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  #suggestions::-webkit-scrollbar { display: none; }
+
+  .chip {
+    padding: 0.45rem 0.9rem;
+    border-radius: 20px;
+    background: rgba(30, 41, 59, 0.6);
+    border: 1px solid var(--border);
+    color: var(--silver-primary);
+    font-size: 0.82rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .chip:hover {
+    background: rgba(51, 65, 85, 0.8);
+    border-color: var(--silver-primary);
+    color: var(--silver-bright);
+    transform: translateY(-1px);
+  }
+
+  /* Input Form */
+  form {
+    display: flex;
+    gap: 0.6rem;
+    padding: 1rem 0;
+    background: transparent;
+    align-items: center;
+  }
+
+  .input-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.9rem 1.2rem;
+    border: 1px solid var(--border);
+    border-radius: 28px;
+    background: rgba(18, 24, 38, 0.9);
+    color: var(--silver-bright);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  input:focus {
+    border-color: rgba(226, 232, 240, 0.6);
+    box-shadow: 0 0 15px rgba(226, 232, 240, 0.15);
+  }
+
+  button {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: var(--accent-silver);
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 15px rgba(226, 232, 240, 0.25);
+  }
+
+  button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+  }
+
+  /* --- A2UI component styles --- */
+  .a2card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 1.2rem;
+    background: var(--card-bg);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    max-width: 100%;
+  }
+  .a2col { display: flex; flex-direction: column; gap: 0.5rem; }
+  .a2row { display: flex; flex-direction: row; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
+  .a2row.between { justify-content: space-between; }
+  .a2text { margin: 0; line-height: 1.5; }
+  .a2text.a2-h1 { font-size: 1.4rem; font-weight: 700; color: var(--silver-bright); }
+  .a2text.a2-h2 { font-size: 1.2rem; font-weight: 700; color: var(--silver-bright); }
+  .a2divider { border: none; border-top: 1px solid var(--border); margin: 0.6rem 0; width: 100%; }
+  .a2img { max-width: 100%; border-radius: var(--radius-md); display: block; }
+  .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-size: 1.25rem; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <div class="brand-icon">
+      <span class="material-symbols-outlined">card_travel</span>
+    </div>
+    <div>
+      <h1 class="brand-title">Anniversary Travel Concierge</h1>
+      <div class="brand-sub">Personalized Milestone Trip & Budget Planner</div>
+    </div>
+  </div>
+  <div class="status-badge">
+    <div class="status-dot"></div>
+    <span>Cloud Live (A2A)</span>
+  </div>
+</header>
+
+<div id="main-container">
+  <div id="log">
+    <div class="msg agent">
+      <div class="sender-label">Anniversary Concierge</div>
+      <div class="bubble">
+        👋 Welcome! I am your <strong>Anniversary Travel Concierge</strong>.
+        <br><br>
+        I can help you plan personalized, romantic milestone trips complete with itemized budget breakdowns, luxury beach/cultural packages, and special anniversary celebration experiences.
+      </div>
+    </div>
+  </div>
+
+  <div id="suggestions">
+    <div class="chip" onclick="sendPrompt('5-day Maui 25th Silver Anniversary under $5,000')">
+      <span>🏝️</span> Maui 25th Anniversary ($5k)
+    </div>
+    <div class="chip" onclick="sendPrompt('Calculate itemized budget for $1,400 flights, 4 nights @ $600 resort, and $200 activities')">
+      <span>🧮</span> Calculate Itemized Budget
+    </div>
+    <div class="chip" onclick="sendPrompt('What are special traditions for a 25th Silver Anniversary?')">
+      <span>💍</span> 25th Silver Traditions
+    </div>
+    <div class="chip" onclick="sendPrompt('Suggest a romantic European anniversary trip under $6,000')">
+      <span>🏰</span> Amalfi Coast Romance
+    </div>
+  </div>
+
+  <form id="form">
+    <div class="input-wrapper">
+      <input id="input" placeholder="Ask about anniversary trips, budgets, or packages..." autocomplete="off" autofocus>
+    </div>
+    <button type="submit" title="Send message">
+      <span class="material-symbols-outlined">send</span>
+    </button>
+  </form>
+</div>
+
+<script>
+const log = document.getElementById("log");
+const form = document.getElementById("form");
+const input = document.getElementById("input");
+
+function el(tag, cls, text) { const e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
+
+function sendPrompt(text) {
+  input.value = text;
+  form.dispatchEvent(new Event('submit'));
+}
+
+function bubble(who) {
+  const m = el("div", "msg " + who);
+  const label = el("div", "sender-label", who === "user" ? "You" : "Anniversary Concierge");
+  const b = el("div", "bubble");
+  m.appendChild(label);
+  m.appendChild(b);
+  log.appendChild(m);
+  log.scrollTop = log.scrollHeight;
+  return b;
+}
+
+// Markdown-like parser helper
+function formatText(text) {
+  let html = text
+    .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`(.*?)`/g, '<code>$1</code>')
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>');
+
+  // Tables
+  if (html.includes('|')) {
+    const lines = html.split('\n');
+    let inTable = false;
+    let tableHtml = '<table>';
+    let newLines = [];
+    
+    for (let line of lines) {
+      if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+        if (line.includes('---')) continue; // Skip divider row
+        const cells = line.split('|').filter(c => c.trim() !== '').map(c => c.trim());
+        if (!inTable) {
+          inTable = true;
+          tableHtml += '<thead><tr>' + cells.map(c => `<th>${c}</th>`).join('') + '</tr></thead><tbody>';
+        } else {
+          tableHtml += '<tr>' + cells.map(c => `<td>${c}</td>`).join('') + '</tr>';
+        }
+      } else {
+        if (inTable) {
+          inTable = false;
+          tableHtml += '</tbody></table>';
+          newLines.push(tableHtml);
+          tableHtml = '<table>';
+        }
+        newLines.push(line);
+      }
+    }
+    if (inTable) {
+      tableHtml += '</tbody></table>';
+      newLines.push(tableHtml);
+    }
+    html = newLines.join('\n');
+  }
+
+  // Paragraphs & Linebreaks
+  return html.replace(/\n\n/g, '<br><br>').replace(/\n•/g, '<br>•').replace(/\n/g, '<br>');
+}
+
+/* --- A2UI Renderer --- */
+function boundStr(v) {
+  if (v == null) return "";
+  if (typeof v === "string") return v;
+  if (typeof v.literalString === "string") return v.literalString;
+  return "";
+}
+
+function childIds(props) {
+  const ids = [];
+  if (props && typeof props.child === "string") ids.push(props.child);
+  const ch = props && props.children;
+  if (ch && Array.isArray(ch.explicitList)) for (const c of ch.explicitList) if (typeof c === "string") ids.push(c);
+  return ids;
+}
+
+function iconName(n) { return String(n || "").replace(/([a-z0-9])([A-Z])/g, "$1_$2").replace(/\s+/g, "_").toLowerCase(); }
+
+function buildNode(id, comps, seen) {
+  if (!id || seen.has(id)) return null;
+  seen.add(id);
+  const spec = comps[id];
+  if (!spec || typeof spec !== "object") return null;
+  const type = Object.keys(spec)[0];
+  const props = spec[type] || {};
+  const kids = () => childIds(props).map(cid => buildNode(cid, comps, seen)).filter(Boolean);
+
+  switch (type) {
+    case "Card": {
+      const d = el("div", "a2card"); kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Column":
+    case "List": {
+      const horizontal = type === "List" && props.direction === "horizontal";
+      const d = el("div", horizontal ? "a2row" : "a2col"); kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Row": {
+      const d = el("div", "a2row" + (props.distribution === "spaceBetween" ? " between" : ""));
+      kids().forEach(n => d.appendChild(n)); return d;
+    }
+    case "Text": {
+      const t = el("div", "a2text");
+      const hint = String(props.usageHint || "body").toLowerCase();
+      if (["h1", "h2", "h3", "h4"].includes(hint)) t.classList.add("a2-" + hint);
+      t.textContent = boundStr(props.text);
+      return t;
+    }
+    case "Divider": return el("hr", "a2divider");
+    case "Image": {
+      const src = boundStr(props.url || props.src);
+      if (!/^https?:\/\//i.test(src)) return null;
+      const img = el("img", "a2img"); img.src = src; img.alt = boundStr(props.alt) || ""; return img;
+    }
+    case "Icon": {
+      const s = el("span", "material-symbols-outlined"); s.textContent = iconName(boundStr(props.name) || props.name); return s;
+    }
+    default: return null;
+  }
+}
+
+function renderSurface(messages, container) {
+  const comps = {};
+  const roots = [];
+  for (const m of messages) {
+    if (m.beginRendering && typeof m.beginRendering.root === "string") roots.push(m.beginRendering.root);
+    const su = m.surfaceUpdate;
+    if (su && Array.isArray(su.components)) for (const c of su.components) if (c && c.id && c.component) comps[c.id] = c.component;
+  }
+  let rootIds = roots.filter(r => comps[r]);
+  if (rootIds.length === 0) {
+    const referenced = new Set();
+    for (const id in comps) { const spec = comps[id]; childIds(spec[Object.keys(spec)[0]] || {}).forEach(c => referenced.add(c)); }
+    rootIds = Object.keys(comps).filter(id => !referenced.has(id));
+  }
+  let drew = false;
+  for (const rid of rootIds) { const node = buildNode(rid, comps, new Set()); if (node) { container.appendChild(node); drew = true; } }
+  return drew;
+}
+
+function renderReply(b, parts) {
+  b.textContent = "";
+  const texts = parts.filter(p => p && (p.kind === "text" || (!p.kind && p.text))).map(p => p.text || "");
+  const a2ui = parts.filter(p => p && p.kind === "a2ui" && p.data).map(p => p.data);
+
+  const textStr = texts.join("\n").trim();
+  if (textStr) {
+    const d = el("div");
+    d.innerHTML = formatText(textStr);
+    b.appendChild(d);
+  }
+
+  if (a2ui.length) {
+    b.classList.add("rich");
+    if (!renderSurface(a2ui, b)) b.appendChild(el("div", null, "Card content loaded"));
+  }
+  if (!b.childNodes.length) b.textContent = "(no response)";
+  log.scrollTop = log.scrollHeight;
+}
+
+form.addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const text = input.value.trim();
+  if (!text) return;
+  bubble("user").textContent = text;
+  input.value = "";
+  const b = bubble("agent"); b.textContent = "…";
+  try {
+    const res = await fetch("/chat", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }) });
+    const raw = await res.text();
+    let data;
+    try { data = JSON.parse(raw); }
+    catch { throw new Error(`Server returned non-JSON (HTTP ${res.status}). ${raw.slice(0, 300)}`); }
+    renderReply(b, data.parts || []);
+  } catch (e) {
+    b.textContent = "Error: " + e.message;
+  }
+});
+</script>
+</body>
+</html>

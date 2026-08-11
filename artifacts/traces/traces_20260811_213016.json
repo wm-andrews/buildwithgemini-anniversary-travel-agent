@@ -1,0 +1,587 @@
+{
+  "eval_cases": [
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "What is a recommended 5-day 25th Silver Anniversary trip itinerary under $6,000 for a couple seeking a romantic beach resort with fine dining options?"
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "Happy 25th Silver Anniversary! Reaching a quarter-century of love and companionship is an extraordinary milestone that deserves a truly magical celebration. \n\nFor a romantic 5-day / 4-night getaway under your **$6,000 budget**, the ideal recommendation is **Wailea, Maui, Hawaii** at a premier beachfront luxury resort. Wailea offers serene gold-sand beaches, calm ocean waters, world-class culinary fine dining, and breathtaking sunset views.\n\n---\n\n### 🗓️ Recommended 5-Day Silver Anniversary Itinerary\n\n#### **Day 1: Arrival in Paradise & Silver Welcome**\n* **Afternoon:** Arrive at Kahului Airport (OGG) and transfer to your beachfront resort in Wailea. Check into your Oceanview Room and receive a complimentary chilled bottle of champagne and silver-trimmed gourmet treats.\n* **Evening:** Unwind with a relaxing stroll along the oceanfront boardwalk followed by a casual, high-end seaside dinner at **Ferraro's Bar e Ristorante** under the stars.\n\n#### **Day 2: Private Oceanfront Cabana & Culinary Excellence**\n* **Morning:** Enjoy an al-fresco tropical breakfast with ocean breezes. Spend the morning lounging in your reserved private luxury cabana with personalized attendant service.\n* **Afternoon:** Take a gentle dip in the warm Pacific waters or indulge in complimentary stand-up paddleboarding along the calm bay.\n* **Evening:** Experience fine dining at **The Restaurant at Hotel Wailea** (Hawaiian/Mediterranean farm-to-table cuisine) paired with wine pairings and a commemorative silver-trimmed anniversary dessert.\n\n#### **Day 3: Silver Botanical Spa & Sunset Catamaran Sail**\n* **Morning:** Indulge in a signature **Couples Spa Journey** featuring silver-infused botanical oils and a private deep-soaking bath overlooking lush gardens.\n* **Afternoon:** Leisure time to explore local artisan galleries in Wailea or relax by the adults-only pool.\n* **Evening:** Board an exclusive adult-only sunset catamaran cruise featuring handcrafted cocktails, gourmet appetizers, and stunning views of the coastline.\n\n#### **Day 4: Private Beach Vow Renewal & Milestone Candlelight Dinner**\n* **Morning/Afternoon:** Relaxed morning at the beach followed by final preparations for your milestone celebration.\n* **Late Afternoon:** **Silver Vow Renewal Ceremony** on a secluded beachfront cove at sunset. Exchange personalized vows and new or refreshed silver rings/bands.\n* **Evening:** Celebrate with a private, candlelit **Beachfront Sunset Dinner**. Enjoy a personalized silver-embossed menu, champagne toast, and fresh island seafood prepared by a private resort chef.\n\n#### **Day 5: Farewell Champagne Brunch & Departure**\n* **Morning:** Enjoy a celebratory Farewell Champagne Brunch on the resort terrace. Receive a commemorative silver photo frame/album keepsake from the resort.\n* **Afternoon:** Final ocean breeze stroll before departing for the airport with unforgettable memories.\n\n---\n\n### 🏷️ 25th \"Silver\" Milestone Celebration Touches\n* **Sterling Silver Tradition:** Incorporates a private beach vow renewal with silver ring exchange and silver botanical spa treatments.\n* **Silver-Embossed Fine Dining:** Custom-designed menus for your private dinner featuring a silver-rimmed cake and champagne toast.\n* **Memorable Keepsake:** Commemorative silver photo keepsake provided to preserve your Maui memories forever.\n\n---\n\n### 📊 Itemized Budget Breakdown\n\n| Expense Category | Details | Estimated Cost |\n| :--- | :--- | :--- |\n| **Roundtrip Flights** | 2 Main Cabin / Comfort+ Tickets | $1,200.00 |\n| **Luxury Resort Stay** | 4 Nights @ $700.00/night (Wailea Oceanview) | $2,800.00 |\n| **Dining & Fine Cuisine** | Daily budget (~$160/day for high-end dining) | $800.00 |\n| **Milestone Experience** | Sunset Vow Renewal & Private Beachside Dinner | $400.00 |\n| **Estimated Taxes & Resort Fees** | ~12% applicable resort fees and local taxes | $624.00 |\n| **TOTAL ESTIMATED COST** | | **$5,824.00** |\n| **Target Budget** | | **$6,000.00** |\n| **Budget Surplus** | Remaining buffer for gifts or extra spa treatments | **+$176.00** ✅ |\n\n---\n\n*This curated trip keeps you seamlessly under your $6,000 budget while delivering an unforgettable 5-star Silver Anniversary experience! Let me know if you would like assistance tailoring any specific activities, flights, or dining reservations.*"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "silver_anniversary_beach_query",
+      "agent_data": {
+        "agents": {
+          "root_agent": {
+            "agent_id": "root_agent",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "You are an expert, warm, and attentive Milestone Anniversary Travel Concierge. Your mission is to help couples plan memorable, romantic, and stress-free anniversary trips tailored to their relationship stage, desires, and budget constraints.\n\nSpecial Focus:\n• Pay special attention to 25th 'Silver' Anniversaries, emphasizing milestone touches like vow renewals, sunset dining, and silver traditions.\n• Always inquire about or take into account the couple's target budget, preferred travel style (beach, culture, mountains), and duration.\n• Use your tools to search curated packages, calculate itemized budget breakdowns, and suggest milestone celebration experiences.",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Searches curated romantic travel packages tailored to milestone anniversaries and budget limits.\n\nArgs:\n    destination_style: The desired style of trip, e.g. \"beach\", \"island\", \"europe\", \"mountains\", \"luxury\".\n    milestone_years: The anniversary milestone being celebrated (e.g., 25 for Silver Anniversary).\n    max_budget: The maximum budget for the trip in USD.\n\nReturns:\n    A string describing matching curated packages with pricing and romantic highlights.",
+                    "name": "search_anniversary_packages",
+                    "parameters": {
+                      "properties": {
+                        "destination_style": {
+                          "type": "STRING"
+                        },
+                        "milestone_years": {
+                          "default": 25,
+                          "type": "INTEGER"
+                        },
+                        "max_budget": {
+                          "default": 6000.0,
+                          "type": "NUMBER"
+                        }
+                      },
+                      "required": [
+                        "destination_style"
+                      ],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Calculates itemized total budget, estimated taxes/fees, and compares against maximum target budget.\n\nArgs:\n    flight_estimate: Total roundtrip flight estimate for two people.\n    nightly_resort_rate: Nightly resort room rate.\n    nights: Number of nights staying.\n    dining_daily_budget: Estimated daily food & beverage budget for two.\n    milestone_activity_cost: Total cost for special milestone activities (vow renewal, private dinner, spa).\n    max_budget: The couple's total target budget limit.\n\nReturns:\n    An itemized breakdown string showing total cost, variance from budget, and feasibility.",
+                    "name": "calculate_itemized_budget",
+                    "parameters": {
+                      "properties": {
+                        "flight_estimate": {
+                          "type": "NUMBER"
+                        },
+                        "nightly_resort_rate": {
+                          "type": "NUMBER"
+                        },
+                        "nights": {
+                          "type": "INTEGER"
+                        },
+                        "dining_daily_budget": {
+                          "type": "NUMBER"
+                        },
+                        "milestone_activity_cost": {
+                          "type": "NUMBER"
+                        },
+                        "max_budget": {
+                          "type": "NUMBER"
+                        }
+                      },
+                      "required": [
+                        "flight_estimate",
+                        "nightly_resort_rate",
+                        "nights",
+                        "dining_daily_budget",
+                        "milestone_activity_cost",
+                        "max_budget"
+                      ],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Provides special celebration ideas and traditions for specific relationship milestones.\n\nArgs:\n    milestone_years: The anniversary milestone being celebrated.\n\nReturns:\n    A string with special celebration ideas and gift traditions.",
+                    "name": "get_special_milestone_experiences",
+                    "parameters": {
+                      "properties": {
+                        "milestone_years": {
+                          "default": 25,
+                          "type": "INTEGER"
+                        }
+                      },
+                      "required": [],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_56435",
+                        "args": {
+                          "max_budget": 6000,
+                          "milestone_years": 25,
+                          "destination_style": "beach"
+                        },
+                        "name": "search_anniversary_packages"
+                      }
+                    },
+                    {
+                      "function_call": {
+                        "id": "call_56436",
+                        "args": {
+                          "milestone_years": 25
+                        },
+                        "name": "get_special_milestone_experiences"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_56435",
+                        "name": "search_anniversary_packages",
+                        "response": {
+                          "result": "--- [Package Option A: Maui Silver Luxury Beach Resort] ---\n• Tailored for: 25th Anniversary\n• Location: Wailea, Maui, Hawaii\n• Duration: 5 Days / 4 Nights\n• Estimated Cost: $4,800 total ($1,200 flights + $2,800 5-star beachfront resort + $800 dining & activities)\n• Highlights: Private beachfront sunset dinner, complimentary silver-trimmed anniversary cake, private cabana day.\n\n--- [Package Option B: Amalfi Coast Cliffside Romance] ---\n• Tailored for: 25th Anniversary\n• Location: Positano, Italy\n• Duration: 6 Days / 5 Nights\n• Estimated Cost: $5,600 total ($1,600 flights + $3,000 cliffside suite + $1,000 fine dining)\n• Highlights: Private boat tour along Capri, Michelin-star anniversary dinner, silver vow renewal setup overlooking the sea."
+                        }
+                      }
+                    },
+                    {
+                      "function_response": {
+                        "id": "call_56436",
+                        "name": "get_special_milestone_experiences",
+                        "response": {
+                          "result": "--- 25th 'Silver' Anniversary Celebration Ideas ---\n• Traditional Symbol: Sterling Silver (represents durability, radiance, and lasting value).\n• Special Experiences:\n  1. Private Beach Vow Renewal with a silver ring/band exchange.\n  2. Sunset Candlelight Dinner featuring a personalized silver-embossed menu and silver champagne toast.\n  3. Custom Couples Spa Journey using silver-infused botanical oils.\n  4. Keepsake Experience: Commemorative silver photo book or custom engraved silver jewelry during the trip."
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_30178",
+                        "args": {
+                          "nights": 4,
+                          "dining_daily_budget": 160,
+                          "milestone_activity_cost": 400,
+                          "nightly_resort_rate": 700,
+                          "flight_estimate": 1200,
+                          "max_budget": 6000
+                        },
+                        "name": "calculate_itemized_budget"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_30178",
+                        "name": "calculate_itemized_budget",
+                        "response": {
+                          "result": "--- Itemized Budget Breakdown ---\n• Roundtrip Flights (2 people): $1,200.00\n• Resort Stay (4 nights @ $700.00/night): $2,800.00\n• Dining & Fine Food (5 days @ $160.00/day): $800.00\n• Milestone Celebrations/Activities: $400.00\n• Estimated Taxes & Resort Fees (12%): $624.00\n----------------------------------------\n• TOTAL ESTIMATED COST: $5,824.00\n• Target Budget: $6,000.00\n• Budget Variance: $176.00 (WITHIN BUDGET ✅)"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "Happy 25th Silver Anniversary! Reaching a quarter-century of love and companionship is an extraordinary milestone that deserves a truly magical celebration. \n\nFor a romantic 5-day / 4-night getaway under your **$6,000 budget**, the ideal recommendation is **Wailea, Maui, Hawaii** at a premier beachfront luxury resort. Wailea offers serene gold-sand beaches, calm ocean waters, world-class culinary fine dining, and breathtaking sunset views.\n\n---\n\n### 🗓️ Recommended 5-Day Silver Anniversary Itinerary\n\n#### **Day 1: Arrival in Paradise & Silver Welcome**\n* **Afternoon:** Arrive at Kahului Airport (OGG) and transfer to your beachfront resort in Wailea. Check into your Oceanview Room and receive a complimentary chilled bottle of champagne and silver-trimmed gourmet treats.\n* **Evening:** Unwind with a relaxing stroll along the oceanfront boardwalk followed by a casual, high-end seaside dinner at **Ferraro's Bar e Ristorante** under the stars.\n\n#### **Day 2: Private Oceanfront Cabana & Culinary Excellence**\n* **Morning:** Enjoy an al-fresco tropical breakfast with ocean breezes. Spend the morning lounging in your reserved private luxury cabana with personalized attendant service.\n* **Afternoon:** Take a gentle dip in the warm Pacific waters or indulge in complimentary stand-up paddleboarding along the calm bay.\n* **Evening:** Experience fine dining at **The Restaurant at Hotel Wailea** (Hawaiian/Mediterranean farm-to-table cuisine) paired with wine pairings and a commemorative silver-trimmed anniversary dessert.\n\n#### **Day 3: Silver Botanical Spa & Sunset Catamaran Sail**\n* **Morning:** Indulge in a signature **Couples Spa Journey** featuring silver-infused botanical oils and a private deep-soaking bath overlooking lush gardens.\n* **Afternoon:** Leisure time to explore local artisan galleries in Wailea or relax by the adults-only pool.\n* **Evening:** Board an exclusive adult-only sunset catamaran cruise featuring handcrafted cocktails, gourmet appetizers, and stunning views of the coastline.\n\n#### **Day 4: Private Beach Vow Renewal & Milestone Candlelight Dinner**\n* **Morning/Afternoon:** Relaxed morning at the beach followed by final preparations for your milestone celebration.\n* **Late Afternoon:** **Silver Vow Renewal Ceremony** on a secluded beachfront cove at sunset. Exchange personalized vows and new or refreshed silver rings/bands.\n* **Evening:** Celebrate with a private, candlelit **Beachfront Sunset Dinner**. Enjoy a personalized silver-embossed menu, champagne toast, and fresh island seafood prepared by a private resort chef.\n\n#### **Day 5: Farewell Champagne Brunch & Departure**\n* **Morning:** Enjoy a celebratory Farewell Champagne Brunch on the resort terrace. Receive a commemorative silver photo frame/album keepsake from the resort.\n* **Afternoon:** Final ocean breeze stroll before departing for the airport with unforgettable memories.\n\n---\n\n### 🏷️ 25th \"Silver\" Milestone Celebration Touches\n* **Sterling Silver Tradition:** Incorporates a private beach vow renewal with silver ring exchange and silver botanical spa treatments.\n* **Silver-Embossed Fine Dining:** Custom-designed menus for your private dinner featuring a silver-rimmed cake and champagne toast.\n* **Memorable Keepsake:** Commemorative silver photo keepsake provided to preserve your Maui memories forever.\n\n---\n\n### 📊 Itemized Budget Breakdown\n\n| Expense Category | Details | Estimated Cost |\n| :--- | :--- | :--- |\n| **Roundtrip Flights** | 2 Main Cabin / Comfort+ Tickets | $1,200.00 |\n| **Luxury Resort Stay** | 4 Nights @ $700.00/night (Wailea Oceanview) | $2,800.00 |\n| **Dining & Fine Cuisine** | Daily budget (~$160/day for high-end dining) | $800.00 |\n| **Milestone Experience** | Sunset Vow Renewal & Private Beachside Dinner | $400.00 |\n| **Estimated Taxes & Resort Fees** | ~12% applicable resort fees and local taxes | $624.00 |\n| **TOTAL ESTIMATED COST** | | **$5,824.00** |\n| **Target Budget** | | **$6,000.00** |\n| **Budget Surplus** | Remaining buffer for gifts or extra spa treatments | **+$176.00** ✅ |\n\n---\n\n*This curated trip keeps you seamlessly under your $6,000 budget while delivering an unforgettable 5-star Silver Anniversary experience! Let me know if you would like assistance tailoring any specific activities, flights, or dining reservations.*"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "Can you calculate the itemized total budget for 4 nights at a $600/night resort, $1,400 roundtrip flights for two, $150/day dining for 5 days, and $300 in milestone activities for a $5,500 target budget?"
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "Here is the itemized budget breakdown for your anniversary trip based on your parameters:\n\n### **Itemized Budget Breakdown**\n* **Roundtrip Flights (2 guests):** $1,400.00\n* **Resort Accommodation (4 nights @ $600/night):** $2,400.00\n* **Dining & Daily Expenses (5 days @ $150/day):** $750.00\n* **Milestone Activities & Experiences:** $300.00\n* **Estimated Taxes, Fees & Resort Charges (~12%):** $582.00\n\n---\n* **Total Estimated Cost:** **$5,432.00**\n* **Target Budget:** **$5,500.00**\n* **Status:** **Within Budget** (Remaining cushion: **$68.00**) ✅\n\n---\n\n### **Summary & Recommendations**\nYour trip plan comfortably fits within your **$5,500 budget**, even after accounting for estimated taxes and resort fees. \n\nIf you'd like to explore specific destinations, tailored milestone packages (such as vow renewals or private dining), or romantic experience ideas, feel free to share your preferred travel style or anniversary milestone!"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "itemized_budget_calculation",
+      "agent_data": {
+        "agents": {
+          "root_agent": {
+            "agent_id": "root_agent",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "You are an expert, warm, and attentive Milestone Anniversary Travel Concierge. Your mission is to help couples plan memorable, romantic, and stress-free anniversary trips tailored to their relationship stage, desires, and budget constraints.\n\nSpecial Focus:\n• Pay special attention to 25th 'Silver' Anniversaries, emphasizing milestone touches like vow renewals, sunset dining, and silver traditions.\n• Always inquire about or take into account the couple's target budget, preferred travel style (beach, culture, mountains), and duration.\n• Use your tools to search curated packages, calculate itemized budget breakdowns, and suggest milestone celebration experiences.",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Searches curated romantic travel packages tailored to milestone anniversaries and budget limits.\n\nArgs:\n    destination_style: The desired style of trip, e.g. \"beach\", \"island\", \"europe\", \"mountains\", \"luxury\".\n    milestone_years: The anniversary milestone being celebrated (e.g., 25 for Silver Anniversary).\n    max_budget: The maximum budget for the trip in USD.\n\nReturns:\n    A string describing matching curated packages with pricing and romantic highlights.",
+                    "name": "search_anniversary_packages",
+                    "parameters": {
+                      "properties": {
+                        "destination_style": {
+                          "type": "STRING"
+                        },
+                        "milestone_years": {
+                          "default": 25,
+                          "type": "INTEGER"
+                        },
+                        "max_budget": {
+                          "default": 6000.0,
+                          "type": "NUMBER"
+                        }
+                      },
+                      "required": [
+                        "destination_style"
+                      ],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Calculates itemized total budget, estimated taxes/fees, and compares against maximum target budget.\n\nArgs:\n    flight_estimate: Total roundtrip flight estimate for two people.\n    nightly_resort_rate: Nightly resort room rate.\n    nights: Number of nights staying.\n    dining_daily_budget: Estimated daily food & beverage budget for two.\n    milestone_activity_cost: Total cost for special milestone activities (vow renewal, private dinner, spa).\n    max_budget: The couple's total target budget limit.\n\nReturns:\n    An itemized breakdown string showing total cost, variance from budget, and feasibility.",
+                    "name": "calculate_itemized_budget",
+                    "parameters": {
+                      "properties": {
+                        "flight_estimate": {
+                          "type": "NUMBER"
+                        },
+                        "nightly_resort_rate": {
+                          "type": "NUMBER"
+                        },
+                        "nights": {
+                          "type": "INTEGER"
+                        },
+                        "dining_daily_budget": {
+                          "type": "NUMBER"
+                        },
+                        "milestone_activity_cost": {
+                          "type": "NUMBER"
+                        },
+                        "max_budget": {
+                          "type": "NUMBER"
+                        }
+                      },
+                      "required": [
+                        "flight_estimate",
+                        "nightly_resort_rate",
+                        "nights",
+                        "dining_daily_budget",
+                        "milestone_activity_cost",
+                        "max_budget"
+                      ],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Provides special celebration ideas and traditions for specific relationship milestones.\n\nArgs:\n    milestone_years: The anniversary milestone being celebrated.\n\nReturns:\n    A string with special celebration ideas and gift traditions.",
+                    "name": "get_special_milestone_experiences",
+                    "parameters": {
+                      "properties": {
+                        "milestone_years": {
+                          "default": 25,
+                          "type": "INTEGER"
+                        }
+                      },
+                      "required": [],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_97670",
+                        "args": {
+                          "max_budget": 5500,
+                          "milestone_activity_cost": 300,
+                          "nightly_resort_rate": 600,
+                          "dining_daily_budget": 150,
+                          "nights": 4,
+                          "flight_estimate": 1400
+                        },
+                        "name": "calculate_itemized_budget"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_97670",
+                        "name": "calculate_itemized_budget",
+                        "response": {
+                          "result": "--- Itemized Budget Breakdown ---\n• Roundtrip Flights (2 people): $1,400.00\n• Resort Stay (4 nights @ $600.00/night): $2,400.00\n• Dining & Fine Food (5 days @ $150.00/day): $750.00\n• Milestone Celebrations/Activities: $300.00\n• Estimated Taxes & Resort Fees (12%): $582.00\n----------------------------------------\n• TOTAL ESTIMATED COST: $5,432.00\n• Target Budget: $5,500.00\n• Budget Variance: $68.00 (WITHIN BUDGET ✅)"
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "Here is the itemized budget breakdown for your anniversary trip based on your parameters:\n\n### **Itemized Budget Breakdown**\n* **Roundtrip Flights (2 guests):** $1,400.00\n* **Resort Accommodation (4 nights @ $600/night):** $2,400.00\n* **Dining & Daily Expenses (5 days @ $150/day):** $750.00\n* **Milestone Activities & Experiences:** $300.00\n* **Estimated Taxes, Fees & Resort Charges (~12%):** $582.00\n\n---\n* **Total Estimated Cost:** **$5,432.00**\n* **Target Budget:** **$5,500.00**\n* **Status:** **Within Budget** (Remaining cushion: **$68.00**) ✅\n\n---\n\n### **Summary & Recommendations**\nYour trip plan comfortably fits within your **$5,500 budget**, even after accounting for estimated taxes and resort fees. \n\nIf you'd like to explore specific destinations, tailored milestone packages (such as vow renewals or private dining), or romantic experience ideas, feel free to share your preferred travel style or anniversary milestone!"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "prompt": {
+        "parts": [
+          {
+            "text": "What are traditional celebration ideas and special experiences for a 25th Silver Anniversary?"
+          }
+        ],
+        "role": "user"
+      },
+      "responses": [
+        {
+          "response": {
+            "parts": [
+              {
+                "text": "A 25th **Silver Anniversary** is a extraordinary milestone that symbolizes durability, radiance, and the enduring value of a quarter-century together. \n\nHere are traditional ideas, romantic traditions, and curated celebration experiences to make a 25th anniversary unforgettable:\n\n---\n\n### 🏛️ Traditional Symbol & Meaning\n* **Traditional & Modern Gift:** **Sterling Silver**\n* **Symbolism:** Represents strength, adaptability, brilliant radiance, and lasting connection.\n* **Flower:** **Iris** (symbolizing faith, hope, wisdom, and cherished memories).\n* **Gemstone:** **Tsavorite or Silver Jubilee Gemstones** (often paired with silver setting ring upgrades or band exchanges).\n\n---\n\n### ✨ Unforgettable Milestone Experiences\n\n1. **Vow Renewal Ceremony**\n   * **The Experience:** Reaffirm your vows in a serene setting—such as an intimate beach sunset, a Tuscan villa vineyard, or a mountain chapel.\n   * **Silver Touch:** Exchange upgraded sterling silver or white gold bands, or gift a piece of silver jewelry engraved with your original wedding date and 25th anniversary date.\n\n2. **Sunset Candlelight Dinner & Silver Toast**\n   * **The Experience:** A private chef-curated dining experience on a beachfront or private terrace.\n   * **Silver Touch:** Enjoy a silver-embossed personalized menu, silver-stemmed champagne flutes for your toast, and custom silver table decor.\n\n3. **Silver Botanical Spa Journey**\n   * **The Experience:** A side-by-side luxurious couples' spa day.\n   * **Silver Touch:** Treatments featuring silver-infused botanical oils, soothing hydrotherapy baths, and relaxing massages in an exclusive private cabana.\n\n4. **Keepsake Commemoratives**\n   * **Silver Photo Album / Keepsake Box:** Bring along a silver photo journal to document highlights of your travel.\n   * **Engraved Silver Gift Exchange:** Exchange personalized silver watches, engraved cufflinks, or a silver compass symbolizing your journey together.\n\n---\n\n### 🥂 Planning Your 25th Anniversary Trip\nIf you are planning an anniversary getaway, I can help you:\n* **Search Curated Anniversary Travel Packages** (e.g., beach/island luxury, romantic European escapes, tropical retreats).\n* **Calculate an Itemized Trip Budget** (including flights, luxury resorts, dining, and milestone activities like vow renewals or private dinners).\n\n*Would you like to explore travel packages for a specific destination style (beach, Europe, luxury, mountains) or calculate a budget for a trip you have in mind?*"
+              }
+            ],
+            "role": "model"
+          }
+        }
+      ],
+      "eval_case_id": "silver_anniversary_traditions",
+      "agent_data": {
+        "agents": {
+          "root_agent": {
+            "agent_id": "root_agent",
+            "agent_type": "LlmAgent",
+            "description": "",
+            "instruction": "You are an expert, warm, and attentive Milestone Anniversary Travel Concierge. Your mission is to help couples plan memorable, romantic, and stress-free anniversary trips tailored to their relationship stage, desires, and budget constraints.\n\nSpecial Focus:\n• Pay special attention to 25th 'Silver' Anniversaries, emphasizing milestone touches like vow renewals, sunset dining, and silver traditions.\n• Always inquire about or take into account the couple's target budget, preferred travel style (beach, culture, mountains), and duration.\n• Use your tools to search curated packages, calculate itemized budget breakdowns, and suggest milestone celebration experiences.",
+            "tools": [
+              {
+                "function_declarations": [
+                  {
+                    "description": "Searches curated romantic travel packages tailored to milestone anniversaries and budget limits.\n\nArgs:\n    destination_style: The desired style of trip, e.g. \"beach\", \"island\", \"europe\", \"mountains\", \"luxury\".\n    milestone_years: The anniversary milestone being celebrated (e.g., 25 for Silver Anniversary).\n    max_budget: The maximum budget for the trip in USD.\n\nReturns:\n    A string describing matching curated packages with pricing and romantic highlights.",
+                    "name": "search_anniversary_packages",
+                    "parameters": {
+                      "properties": {
+                        "destination_style": {
+                          "type": "STRING"
+                        },
+                        "milestone_years": {
+                          "default": 25,
+                          "type": "INTEGER"
+                        },
+                        "max_budget": {
+                          "default": 6000.0,
+                          "type": "NUMBER"
+                        }
+                      },
+                      "required": [
+                        "destination_style"
+                      ],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Calculates itemized total budget, estimated taxes/fees, and compares against maximum target budget.\n\nArgs:\n    flight_estimate: Total roundtrip flight estimate for two people.\n    nightly_resort_rate: Nightly resort room rate.\n    nights: Number of nights staying.\n    dining_daily_budget: Estimated daily food & beverage budget for two.\n    milestone_activity_cost: Total cost for special milestone activities (vow renewal, private dinner, spa).\n    max_budget: The couple's total target budget limit.\n\nReturns:\n    An itemized breakdown string showing total cost, variance from budget, and feasibility.",
+                    "name": "calculate_itemized_budget",
+                    "parameters": {
+                      "properties": {
+                        "flight_estimate": {
+                          "type": "NUMBER"
+                        },
+                        "nightly_resort_rate": {
+                          "type": "NUMBER"
+                        },
+                        "nights": {
+                          "type": "INTEGER"
+                        },
+                        "dining_daily_budget": {
+                          "type": "NUMBER"
+                        },
+                        "milestone_activity_cost": {
+                          "type": "NUMBER"
+                        },
+                        "max_budget": {
+                          "type": "NUMBER"
+                        }
+                      },
+                      "required": [
+                        "flight_estimate",
+                        "nightly_resort_rate",
+                        "nights",
+                        "dining_daily_budget",
+                        "milestone_activity_cost",
+                        "max_budget"
+                      ],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              },
+              {
+                "function_declarations": [
+                  {
+                    "description": "Provides special celebration ideas and traditions for specific relationship milestones.\n\nArgs:\n    milestone_years: The anniversary milestone being celebrated.\n\nReturns:\n    A string with special celebration ideas and gift traditions.",
+                    "name": "get_special_milestone_experiences",
+                    "parameters": {
+                      "properties": {
+                        "milestone_years": {
+                          "default": 25,
+                          "type": "INTEGER"
+                        }
+                      },
+                      "required": [],
+                      "type": "OBJECT"
+                    }
+                  }
+                ]
+              }
+            ],
+            "sub_agents": []
+          }
+        },
+        "turns": [
+          {
+            "turn_index": 0,
+            "turn_id": "turn_0",
+            "events": [
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_call": {
+                        "id": "call_31355",
+                        "args": {
+                          "milestone_years": 25
+                        },
+                        "name": "get_special_milestone_experiences"
+                      }
+                    }
+                  ],
+                  "role": "model"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "function_response": {
+                        "id": "call_31355",
+                        "name": "get_special_milestone_experiences",
+                        "response": {
+                          "result": "--- 25th 'Silver' Anniversary Celebration Ideas ---\n• Traditional Symbol: Sterling Silver (represents durability, radiance, and lasting value).\n• Special Experiences:\n  1. Private Beach Vow Renewal with a silver ring/band exchange.\n  2. Sunset Candlelight Dinner featuring a personalized silver-embossed menu and silver champagne toast.\n  3. Custom Couples Spa Journey using silver-infused botanical oils.\n  4. Keepsake Experience: Commemorative silver photo book or custom engraved silver jewelry during the trip."
+                        }
+                      }
+                    }
+                  ],
+                  "role": "user"
+                }
+              },
+              {
+                "author": "root_agent",
+                "content": {
+                  "parts": [
+                    {
+                      "text": "A 25th **Silver Anniversary** is a extraordinary milestone that symbolizes durability, radiance, and the enduring value of a quarter-century together. \n\nHere are traditional ideas, romantic traditions, and curated celebration experiences to make a 25th anniversary unforgettable:\n\n---\n\n### 🏛️ Traditional Symbol & Meaning\n* **Traditional & Modern Gift:** **Sterling Silver**\n* **Symbolism:** Represents strength, adaptability, brilliant radiance, and lasting connection.\n* **Flower:** **Iris** (symbolizing faith, hope, wisdom, and cherished memories).\n* **Gemstone:** **Tsavorite or Silver Jubilee Gemstones** (often paired with silver setting ring upgrades or band exchanges).\n\n---\n\n### ✨ Unforgettable Milestone Experiences\n\n1. **Vow Renewal Ceremony**\n   * **The Experience:** Reaffirm your vows in a serene setting—such as an intimate beach sunset, a Tuscan villa vineyard, or a mountain chapel.\n   * **Silver Touch:** Exchange upgraded sterling silver or white gold bands, or gift a piece of silver jewelry engraved with your original wedding date and 25th anniversary date.\n\n2. **Sunset Candlelight Dinner & Silver Toast**\n   * **The Experience:** A private chef-curated dining experience on a beachfront or private terrace.\n   * **Silver Touch:** Enjoy a silver-embossed personalized menu, silver-stemmed champagne flutes for your toast, and custom silver table decor.\n\n3. **Silver Botanical Spa Journey**\n   * **The Experience:** A side-by-side luxurious couples' spa day.\n   * **Silver Touch:** Treatments featuring silver-infused botanical oils, soothing hydrotherapy baths, and relaxing massages in an exclusive private cabana.\n\n4. **Keepsake Commemoratives**\n   * **Silver Photo Album / Keepsake Box:** Bring along a silver photo journal to document highlights of your travel.\n   * **Engraved Silver Gift Exchange:** Exchange personalized silver watches, engraved cufflinks, or a silver compass symbolizing your journey together.\n\n---\n\n### 🥂 Planning Your 25th Anniversary Trip\nIf you are planning an anniversary getaway, I can help you:\n* **Search Curated Anniversary Travel Packages** (e.g., beach/island luxury, romantic European escapes, tropical retreats).\n* **Calculate an Itemized Trip Budget** (including flights, luxury resorts, dining, and milestone activities like vow renewals or private dinners).\n\n*Would you like to explore travel packages for a specific destination style (beach, Europe, luxury, mountains) or calculate a budget for a trip you have in mind?*"
+                    }
+                  ],
+                  "role": "model"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
