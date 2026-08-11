@@ -144,6 +144,66 @@ def generate_anniversary_concept_art(prompt_description: str, tool_context: Tool
         return f"Error generating concept art image: {str(e)}"
 
 
+def generate_anniversary_video_teaser(prompt_description: str, tool_context: ToolContext) -> str:
+    """Generates a short romantic video teaser for an anniversary travel destination or celebration
+    using Google's Omni model (gemini-omni-flash-preview) in the global region.
+    Saves the video artifact to Playground Artifacts and uploads the video bytes to public Cloud Storage.
+
+    Args:
+        prompt_description: Detailed description of the video scene (e.g. "A romantic short video teaser of a sunset oceanfront dinner in Maui Hawaii").
+
+    Returns:
+        A string containing the public Cloud Storage HTTPS URL of the generated video.
+    """
+    try:
+        client = genai.Client(vertexai=True, project=PROJECT_ID, location="global")
+        response = client.models.generate_content(
+            model="gemini-omni-flash-preview",
+            contents=prompt_description,
+            config=types.GenerateContentConfig(
+                response_modalities=["VIDEO"],
+            ),
+        )
+
+        video_bytes = None
+        mime_type = "video/mp4"
+        if response.candidates and response.candidates[0].content and response.candidates[0].content.parts:
+            for part in response.candidates[0].content.parts:
+                if part.inline_data:
+                    video_bytes = part.inline_data.data
+                    if part.inline_data.mime_type:
+                        mime_type = part.inline_data.mime_type
+                    break
+
+        if not video_bytes:
+            return "Unable to generate video bytes for the requested prompt."
+
+        ext = "mp4"
+        if "webm" in mime_type:
+            ext = "webm"
+        artifact_filename = f"video_teaser_{int(time.time())}.{ext}"
+
+        if tool_context:
+            tool_context.save_artifact(
+                filename=artifact_filename,
+                artifact=types.Part.from_bytes(data=video_bytes, mime_type=mime_type),
+            )
+
+        storage_client = storage.Client(project=PROJECT_ID)
+        bucket = storage_client.bucket(BUCKET_NAME)
+        blob = bucket.blob(artifact_filename)
+        blob.upload_from_string(video_bytes, content_type=mime_type)
+
+        public_url = f"https://storage.googleapis.com/{BUCKET_NAME}/{artifact_filename}"
+        return (
+            f"🎬 Successfully generated romantic anniversary video teaser!\n"
+            f"• Saved to Playground Artifacts: {artifact_filename}\n"
+            f"• Public Video HTTPS URL: {public_url}"
+        )
+    except Exception as e:
+        return f"Error generating anniversary video teaser: {str(e)}"
+
+
 def get_destination_weather(destination_name: str) -> str:
     """Fetches real-time weather, temperatures, precipitation, and exact sunset times for any travel destination using the Open-Meteo API.
 
@@ -460,6 +520,7 @@ root_agent = Agent(
     tools=[
         PreloadMemoryTool(),
         generate_anniversary_concept_art,
+        generate_anniversary_video_teaser,
         get_destination_weather,
         search_anniversary_packages,
         calculate_itemized_budget,
